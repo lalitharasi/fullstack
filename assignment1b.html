@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee Calculator - Nritya Sanskruti</title>
+    <style>
+        :root {
+            --royal-red: #800020;
+            --gold: #d4af37;
+            --cream: #fdfaf5;
+            --dark: #2b000a;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        /* Alignment & Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Georgia', serif; 
+            background: var(--cream); 
+            color: #333; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* The Navigation Button to go back */
+        .nav-back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .btn-outline {
+            text-decoration: none;
+            color: var(--royal-red);
+            border: 2px solid var(--royal-red);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: 0.3s;
+            display: inline-block;
+        }
+
+        .btn-outline:hover {
+            background: var(--royal-red);
+            color: white;
+        }
+
+        /* Calculator Container */
+        .js-demo-container {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--gold);
+            text-align: center;
+        }
+
+        h2 { color: var(--royal-red); margin-bottom: 10px; }
+        .subtitle { color: #666; font-style: italic; margin-bottom: 30px; display: block; }
+        
+        .calc-box {
+            text-align: left;
+            background: #fffcf5;
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        label { display: block; font-weight: bold; margin-bottom: 8px; color: var(--dark); }
+
+        select, .calc-btn {
+            width: 100%;
+            padding: 14px;
+            margin: 10px 0 20px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            font-family: inherit;
+        }
+
+        .calc-btn {
+            background: var(--royal-red);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: 0.3s;
+        }
+
+        .calc-btn:hover { background: var(--dark); transform: translateY(-2px); }
+
+        /* Result Area */
+        #result {
+            margin-top: 10px;
+            padding: 15px;
+            background: #fdfaf5;
+            border-left: 4px solid var(--gold);
+            color: var(--dark);
+            font-family: 'Courier New', Courier, monospace;
+            display: none;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="nav-back">
+        <a href="assignment1.html" class="btn-outline">← Back to Academy Home</a>
+    </div>
+
+    <div class="js-demo-container">
+        <h2>Fee Calculator</h2>
+        <span class="subtitle">Official Student Portal</span>
+        
+        <div class="calc-box">
+            <label for="danceSelect">Select Your Course:</label>
+            <select id="danceSelect">
+                <option value="5000">Bharatanatyam (Foundation)</option>
+                <option value="4500">Kathak (Beginner)</option>
+                <option value="4800">Odissi (Junior)</option>
+                <option value="6000">Kuchipudi (Advanced)</option>
+            </select>
+
+            <button class="calc-btn" onclick="handleCalculation()">Calculate Total Fee</button>
+
+            <div id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        // User-Defined Function
+        function applyTax(baseAmount) {
+            return baseAmount + (baseAmount * 0.18); // Adding 18% GST
+        }
+
+        // Logical Function
+        function handleCalculation() {
+            const select = document.getElementById('danceSelect');
+            const resultDiv = document.getElementById('result');
+
+            // Standard Function (parseFloat)
+            let basePrice = parseFloat(select.value);
+
+            // Using User-Defined Function
+            let finalTotal = applyTax(basePrice);
+
+            // Standard Function (toFixed)
+            let formattedTotal = finalTotal.toFixed(2);
+
+            resultDiv.style.display = "block";
+            resultDiv.innerHTML = `
+                <b>Receipt Preview:</b><br>
+                -------------------------<br>
+                Base Tuition: ₹${basePrice}<br>
+                GST (18%): ₹${(finalTotal - basePrice).toFixed(2)}<br>
+                <strong>Total Payable: ₹${formattedTotal}</strong>
+            `;
+        }
+    </script>
+
+</body>
+</html>
